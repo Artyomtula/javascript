@@ -8,20 +8,20 @@
   <body>
     <div>
       <h1>Считать ворон</h1>
-      <form>
+      <form onsubmit="countCrows(event)">
         <label for="num">Количество ворон:</label>
         <input type="number" id="num" name="num" required min="1" /><br /><br />
-        <button type="button" onclick="countCrows()">Считать</button>
+        <button type="submit">Считать</button>
       </form>
     </div>
 
     <script>
       "use strict";
 
-      function countCrows() {
+      function countCrows(event) {
+        event.preventDefault(); // предотвращаем стандартную отправку формы
         const num = parseInt(document.getElementById("num").value);
 
-        // Проверка на корректный ввод
         if (isNaN(num) || num < 1) {
           alert("Пожалуйста, введите число больше 0");
           return;
