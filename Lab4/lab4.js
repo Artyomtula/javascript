@@ -59,15 +59,14 @@ function formatDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  return `${year}.${month}.${day}`;
+  return `${day}.${month}.${year}`;
 }
 
 function isEmpty(obj) {
   if (typeof obj !== "object" || obj === null) return true;
-  for (let key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
-  }
-  return Object.getOwnPropertySymbols(obj).length === 0;
+  if (Object.getOwnPropertyNames(obj).length > 0) return false;
+  if (Object.getOwnPropertySymbols(obj).length > 0) return false;
+  return true;
 }
 
 function getSecondsToday() {
