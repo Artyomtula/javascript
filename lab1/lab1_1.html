@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pension calculator</title>
+    <script defer src="./script1.js"></script>
+  </head>
+  <body>
+    <form id="pensionForm">
+      <h2>Введите возраст</h2>
+      <input
+        required
+        placeholder="Age"
+        id="age"
+        name="age"
+        type="number"
+        min="0"
+      />
+      <h2>Выберите пол</h2>
+      <label>
+        <input type="radio" name="gender" value="male" required />
+        Мужской
+      </label>
+      <label>
+        <input type="radio" name="gender" value="female" required />
+        Женский
+      </label>
+      <h2>Результат</h2>
+      <textarea
+        readonly
+        type="text"
+        placeholder="Так кто же ты???"
+        id="result"
+      ></textarea>
+      <button type="submit">Отправить</button>
+    </form>
+  </body>
+</html>
