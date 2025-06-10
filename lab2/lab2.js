@@ -20,9 +20,9 @@ function pow(x, n) {
  * @param {number} n - Натуральное число.
  * @returns {number} Сумма чисел от 1 до n.
  */
-function sumTo(n) {
+const sumTo = function (n) {
   return (n * (n + 1)) / 2;
-}
+};
 
 /**
  * Проверяет год на високосность.
