@@ -2,37 +2,99 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>Pension calculator</title>
-    <script defer src="./script1.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пенсионный калькулятор</title>
   </head>
   <body>
+    <h1>Пенсионный калькулятор</h1>
     <form id="pensionForm">
-      <h2>Введите возраст</h2>
-      <input
-        required
-        placeholder="Age"
-        id="age"
-        name="age"
-        type="number"
-        min="0"
-      />
-      <h2>Выберите пол</h2>
-      <label>
-        <input type="radio" name="gender" value="male" required />
-        Мужской
-      </label>
-      <label>
-        <input type="radio" name="gender" value="female" required />
-        Женский
-      </label>
-      <h2>Результат</h2>
-      <textarea
-        readonly
-        type="text"
-        placeholder="Так кто же ты???"
-        id="result"
-      ></textarea>
-      <button type="submit">Отправить</button>
+      <div>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" min="0" required />
+      </div>
+
+      <div>
+        <label>Пол:</label>
+        <input type="radio" id="male" name="gender" value="male" required />
+        <label for="male">Мужской</label>
+        <input type="radio" id="female" name="gender" value="female" />
+        <label for="female">Женский</label>
+      </div>
+
+      <button type="submit" id="calculateBtn">Рассчитать</button>
     </form>
+
+    <div style="display: flex; flex-direction: column; width: 200px">
+      <label for="result">Результат:</label>
+      <textarea id="result" readonly></textarea>
+    </div>
+
+    <script>
+      "use strict";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("pensionForm");
+        form.onsubmit = function (event) {
+          event.preventDefault();
+          calculatePension();
+        };
+      });
+
+      function calculatePension() {
+        const ageInput = document.getElementById("age");
+        const genderInput = document.querySelector(
+          'input[name="gender"]:checked'
+        );
+        const resultOutput = document.getElementById("result");
+
+        try {
+          if (!genderInput) {
+            throw new Error("Пожалуйста, укажите пол");
+          }
+
+          const age = parseInt(ageInput.value, 10);
+          const gender = genderInput.value;
+
+          if (isNaN(age) || age < 0) {
+            throw new Error("Пожалуйста, введите корректный возраст");
+          }
+          resultOutput.value = getPensionMessage(age, gender);
+        } catch (error) {
+          resultOutput.value = error.message;
+        }
+      }
+
+      function getPensionMessage(age, gender) {
+        const maleRetire = 65;
+        const femaleRetire = 60;
+        const malePreRetire = 60;
+        const femalePreRetire = 55;
+        const workStart = 18;
+
+        if (age <= 17) {
+          return "Вам работать ещё рано — учитесь";
+        }
+
+        if (gender === "male") {
+          if (age >= workStart && age <= malePreRetire - 1) {
+            return "Вам ещё работать и работать";
+          } else if (age >= malePreRetire && age <= maleRetire - 1) {
+            return "Скоро пенсия!";
+          } else if (age >= maleRetire) {
+            return "Вам пора на пенсию";
+          }
+        } else {
+          if (age >= workStart && age <= femalePreRetire - 1) {
+            return "Вам ещё работать и работать";
+          } else if (age >= femalePreRetire && age <= femaleRetire - 1) {
+            return "Скоро пенсия!";
+          } else if (age >= femaleRetire) {
+            return "Вам пора на пенсию";
+          }
+        }
+
+        return "Да кто ты такой?";
+      }
+    </script>
   </body>
 </html>
